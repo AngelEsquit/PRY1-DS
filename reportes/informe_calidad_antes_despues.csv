@@ -1,0 +1,9 @@
+Metrica,Antes,Despues
+Registros,11867.0,11867.0
+Variables,17.0,24.0
+Valores faltantes,4263.0,4286.0
+% faltantes,2.11,2.12
+Variables con NA,6.0,6.0
+Duplicados exactos (fila completa),0.0,0.0
+"Posibles duplicados parciales (nombre similar, no identico)",3726.0,2075.0
+Establecimientos unicos (ESTABLECIMIENTO),6313.0,5833.0
