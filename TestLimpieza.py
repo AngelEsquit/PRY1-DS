@@ -1,8 +1,8 @@
 """Pruebas automaticas de validacion del conjunto limpio (item 7 de la guia).
 
-Ejecutar con: .venv/Scripts/python.exe -m pytest test_limpieza.py -v
+Ejecutar con: .venv/Scripts/python.exe -m pytest TestLimpieza.py -v
 
-Estas pruebas corren sobre el CSV ya exportado por limpieza_establecimientos.py
+Estas pruebas corren sobre el CSV ya exportado por LimpiezaEstablecimientos.py
 (no vuelven a correr la limpieza) para verificar que el ENTREGABLE final
 cumple las reglas de calidad pedidas.
 """
@@ -15,10 +15,10 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from limpieza import catalogos
+from Limpieza import Catalogos
 
 ROOT = Path(__file__).resolve().parent
-CSV_LIMPIO = ROOT / "Datos/csv/establecimientos_diversificado_limpio.csv"
+CSV_LIMPIO = ROOT / "Datos/Csv/EstablecimientosDiversificadoLimpio.csv"
 
 COLUMNAS_ORIGINALES = [
     "CODIGO", "DISTRITO", "DEPARTAMENTO", "MUNICIPIO", "ESTABLECIMIENTO",
@@ -35,7 +35,7 @@ COLUMNAS_CATEGORICAS = [
 
 # Los unicos valores de MUNICIPIO fuera de catalogo que se aceptan sin fallar
 # la prueba son los documentados explicitamente en el informe de calidad
-# (ver limpieza/catalogos.py): variantes ortograficas de la fuente MINEDUC
+# (ver Limpieza/Catalogos.py): variantes ortograficas de la fuente MINEDUC
 # que se dejaron para revision manual en vez de corregirse por adivinanza.
 MUNICIPIOS_INVALIDOS_DOCUMENTADOS = {
     ("CHIQUIMULA", "QUEZALTEPEQUE"),
@@ -47,7 +47,7 @@ MUNICIPIOS_INVALIDOS_DOCUMENTADOS = {
 @pytest.fixture(scope="module")
 def df() -> pd.DataFrame:
     if not CSV_LIMPIO.exists():
-        pytest.skip("Corra limpieza_establecimientos.py antes de las pruebas.")
+        pytest.skip("Corra LimpiezaEstablecimientos.py antes de las pruebas.")
     return pd.read_csv(CSV_LIMPIO, dtype=str, keep_default_na=True, encoding="utf-8")
 
 
@@ -91,7 +91,7 @@ def test_telefono_valido_es_booleano_y_consistente_con_cantidad(df):
 
 
 def test_departamento_pertenece_al_catalogo(df):
-    invalidos = df.loc[~df["DEPARTAMENTO"].map(catalogos.departamento_valido), "DEPARTAMENTO"].unique()
+    invalidos = df.loc[~df["DEPARTAMENTO"].map(Catalogos.departamento_valido), "DEPARTAMENTO"].unique()
     assert len(invalidos) == 0, f"departamentos fuera de catalogo: {invalidos}"
 
 
@@ -153,12 +153,12 @@ def test_establecimiento_sin_comillas_envolventes_completas(df):
 
 
 def test_reportes_generados_existen():
-    reportes = ROOT / "reportes"
+    reportes = ROOT / "Reportes"
     for nombre in [
-        "registro_transformaciones.csv",
-        "informe_calidad_antes_despues.csv",
-        "posibles_duplicados_parciales.csv",
-        "establecimientos_nombre_repetido.csv",
+        "RegistroTransformaciones.csv",
+        "InformeCalidadAntesDespues.csv",
+        "PosiblesDuplicadosParciales.csv",
+        "EstablecimientosNombreRepetido.csv",
     ]:
         archivo = reportes / nombre
         assert archivo.exists(), f"falta el reporte {nombre}"
@@ -166,7 +166,7 @@ def test_reportes_generados_existen():
 
 
 def test_registro_transformaciones_cubre_las_17_variables():
-    tabla = pd.read_csv(ROOT / "reportes/registro_transformaciones.csv", encoding="utf-8")
+    tabla = pd.read_csv(ROOT / "Reportes/RegistroTransformaciones.csv", encoding="utf-8")
     variables_cubiertas = set(tabla["Variable"])
     faltantes = set(COLUMNAS_ORIGINALES) - variables_cubiertas
     assert not faltantes, f"variables sin entrada en el registro de transformaciones: {faltantes}"

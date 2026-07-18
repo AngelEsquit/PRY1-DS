@@ -1,15 +1,15 @@
 """Limpieza reproducible del conjunto consolidado de establecimientos educativos.
 
-Lee `Datos/csv/establecimientos_diversificado_consolidado.csv` (salida de
-`procesar_establecimientos.py`), aplica las reglas de limpieza descritas en
-`avance_proyecto_1.md` usando los modulos del paquete `limpieza/`, y exporta:
+Lee `Datos/Csv/EstablecimientosDiversificadoConsolidado.csv` (salida de
+`ProcesarEstablecimientos.py`), aplica las reglas de limpieza descritas en
+`AvanceProyecto1.md` usando los modulos del paquete `Limpieza/`, y exporta:
 
-- Datos/csv/establecimientos_diversificado_limpio.csv   (dataset limpio)
-- reportes/registro_transformaciones.csv                (item 6 de la guia)
-- reportes/informe_calidad_antes_despues.csv            (item 8 de la guia)
-- reportes/posibles_duplicados_parciales.csv            (item 5.g de la guia)
+- Datos/Csv/EstablecimientosDiversificadoLimpio.csv   (dataset limpio)
+- Reportes/RegistroTransformaciones.csv               (item 6 de la guia)
+- Reportes/InformeCalidadAntesDespues.csv              (item 8 de la guia)
+- Reportes/PosiblesDuplicadosParciales.csv             (item 5.g de la guia)
 
-Ejecutar con: .venv/Scripts/python.exe limpieza_establecimientos.py
+Ejecutar con: .venv/Scripts/python.exe LimpiezaEstablecimientos.py
 """
 
 from __future__ import annotations
@@ -18,14 +18,14 @@ from pathlib import Path
 
 import pandas as pd
 
-from limpieza import catalogos, columnas, duplicados
-from limpieza.telefono import procesar_telefono
-from limpieza.texto import es_placeholder_faltante
+from Limpieza import Catalogos, Columnas, Duplicados
+from Limpieza.Telefono import procesar_telefono
+from Limpieza.Texto import es_placeholder_faltante
 
 ROOT = Path(__file__).resolve().parent
-ENTRADA = ROOT / "Datos/csv/establecimientos_diversificado_consolidado.csv"
-SALIDA_CSV = ROOT / "Datos/csv/establecimientos_diversificado_limpio.csv"
-REPORTES_DIR = ROOT / "reportes"
+ENTRADA = ROOT / "Datos/Csv/EstablecimientosDiversificadoConsolidado.csv"
+SALIDA_CSV = ROOT / "Datos/Csv/EstablecimientosDiversificadoLimpio.csv"
+REPORTES_DIR = ROOT / "Reportes"
 
 COLUMNAS_ORIGINALES = [
     "CODIGO", "DISTRITO", "DEPARTAMENTO", "MUNICIPIO", "ESTABLECIMIENTO",
@@ -84,7 +84,7 @@ def limpiar(df_crudo: pd.DataFrame) -> pd.DataFrame:
     df = df_crudo.copy()
 
     # --- CODIGO ---------------------------------------------------------
-    limpio, valido = columnas.procesar_codigo(df["CODIGO"])
+    limpio, valido = Columnas.procesar_codigo(df["CODIGO"])
     df["CODIGO"] = limpio
     registrar(
         "CODIGO", "Ninguno: el 100% de los registros ya cumple ##-##-####-##.",
@@ -94,7 +94,7 @@ def limpiar(df_crudo: pd.DataFrame) -> pd.DataFrame:
     )
 
     # --- DISTRITO ---------------------------------------------------------
-    limpio, clase, valido = columnas.procesar_distrito(df["DISTRITO"])
+    limpio, clase, valido = Columnas.procesar_distrito(df["DISTRITO"])
     df["DISTRITO"] = limpio
     n_incompleto = int((clase == "incompleto").sum())
     n_vacio = int((clase == "vacio").sum())
@@ -109,7 +109,7 @@ def limpiar(df_crudo: pd.DataFrame) -> pd.DataFrame:
     df["DISTRITO_VALIDO"] = valido
 
     # --- DEPARTAMENTO -----------------------------------------------------
-    limpio, valido = columnas.procesar_departamento(df["DEPARTAMENTO"])
+    limpio, valido = Columnas.procesar_departamento(df["DEPARTAMENTO"])
     n_tilde = int((limpio != df["DEPARTAMENTO"]).sum())
     df["DEPARTAMENTO"] = limpio
     registrar(
@@ -121,7 +121,7 @@ def limpiar(df_crudo: pd.DataFrame) -> pd.DataFrame:
     )
 
     # --- MUNICIPIO ---------------------------------------------------------
-    limpio, valido = columnas.procesar_municipio(df["DEPARTAMENTO"], df["MUNICIPIO"])
+    limpio, valido = Columnas.procesar_municipio(df["DEPARTAMENTO"], df["MUNICIPIO"])
     n_cambios = int((limpio != df["MUNICIPIO"]).sum())
     df["MUNICIPIO"] = limpio
     df["MUNICIPIO_VALIDO"] = valido
@@ -134,7 +134,7 @@ def limpiar(df_crudo: pd.DataFrame) -> pd.DataFrame:
     )
 
     # --- ESTABLECIMIENTO -----------------------------------------------------
-    limpio, mapa_tildes = columnas.procesar_establecimiento(df["ESTABLECIMIENTO"])
+    limpio, mapa_tildes = Columnas.procesar_establecimiento(df["ESTABLECIMIENTO"])
     n_cambios = int((limpio != df["ESTABLECIMIENTO"]).sum())
     df["ESTABLECIMIENTO"] = limpio
     registrar(
@@ -147,7 +147,7 @@ def limpiar(df_crudo: pd.DataFrame) -> pd.DataFrame:
 
     # --- DIRECCION, SUPERVISOR, DIRECTOR (texto libre + placeholders) ------
     for col in ["DIRECCION", "SUPERVISOR", "DIRECTOR"]:
-        limpio, mapa_tildes_col = columnas.procesar_texto_libre_con_placeholder(df[col])
+        limpio, mapa_tildes_col = Columnas.procesar_texto_libre_con_placeholder(df[col])
         registrar(
             col,
             "Vacios y placeholders ('-', '--', '.', 'S/D', 'SIN REGISTRO', etc.) mezclados como si fueran texto valido; "
@@ -177,7 +177,7 @@ def limpiar(df_crudo: pd.DataFrame) -> pd.DataFrame:
 
     # --- Categoricas de dominio pequeno (ya se verificaron limpias) --------
     for col in COLUMNAS_CATEGORICAS_SIMPLES:
-        limpio = columnas.procesar_categorica_simple(df[col])
+        limpio = Columnas.procesar_categorica_simple(df[col])
         n_cambios = int((limpio != df[col]).sum())
         df[col] = limpio
         registrar(
@@ -219,7 +219,7 @@ def main() -> None:
     faltantes_antes, variables_con_na_antes = contar_faltantes_estilo_crudo(df_crudo)
     duplicados_exactos_antes = int(df_crudo.duplicated(keep=False).sum())
     unicos_establecimiento_antes = df_crudo["ESTABLECIMIENTO"].nunique()
-    candidatos_antes = duplicados.detectar_duplicados_parciales(df_crudo, umbral=90.0)
+    candidatos_antes = Duplicados.detectar_duplicados_parciales(df_crudo, umbral=90.0)
     parciales_antes = candidatos_antes[candidatos_antes["similitud_nombre"] < 100]
 
     df_limpio = limpiar(df_crudo)
@@ -233,13 +233,13 @@ def main() -> None:
             .drop_duplicates()
         )
 
-    candidatos_despues = duplicados.detectar_duplicados_parciales(df_limpio, umbral=90.0)
+    candidatos_despues = Duplicados.detectar_duplicados_parciales(df_limpio, umbral=90.0)
     # Los pares con 100% de similitud de nombre corresponden casi siempre al
     # mismo establecimiento con varios renglones (una fila por jornada/plan,
     # o por cambio de STATUS en el tiempo): se documentan aparte en vez de
     # mezclarlos con los candidatos reales de error ortografico/tipografico.
     parciales_despues = candidatos_despues[candidatos_despues["similitud_nombre"] < 100]
-    nombres_repetidos = duplicados.resumir_nombres_repetidos(df_limpio)
+    nombres_repetidos = Duplicados.resumir_nombres_repetidos(df_limpio)
     nombres_repetidos_distinta_direccion = int((nombres_repetidos["direcciones_distintas"] > 1).sum())
 
     snapshot_antes = {
@@ -268,20 +268,20 @@ def main() -> None:
     tabla_transformaciones = pd.DataFrame(registro_transformaciones)
 
     df_limpio.to_csv(SALIDA_CSV, index=False, encoding="utf-8")
-    tabla_transformaciones.to_csv(REPORTES_DIR / "registro_transformaciones.csv", index=False, encoding="utf-8")
-    informe.to_csv(REPORTES_DIR / "informe_calidad_antes_despues.csv", index=False, encoding="utf-8")
-    parciales_despues.to_csv(REPORTES_DIR / "posibles_duplicados_parciales.csv", index=False, encoding="utf-8")
-    nombres_repetidos.to_csv(REPORTES_DIR / "establecimientos_nombre_repetido.csv", index=False, encoding="utf-8")
+    tabla_transformaciones.to_csv(REPORTES_DIR / "RegistroTransformaciones.csv", index=False, encoding="utf-8")
+    informe.to_csv(REPORTES_DIR / "InformeCalidadAntesDespues.csv", index=False, encoding="utf-8")
+    parciales_despues.to_csv(REPORTES_DIR / "PosiblesDuplicadosParciales.csv", index=False, encoding="utf-8")
+    nombres_repetidos.to_csv(REPORTES_DIR / "EstablecimientosNombreRepetido.csv", index=False, encoding="utf-8")
 
     print()
     print("=== Informe de calidad: antes vs despues ===")
     print(informe.to_string(index=False))
     print()
     print(f"Dataset limpio: {SALIDA_CSV}")
-    print(f"Registro de transformaciones: {REPORTES_DIR / 'registro_transformaciones.csv'} ({len(tabla_transformaciones)} filas)")
-    print(f"Posibles duplicados parciales (nombre similar, no identico) para revision manual: {REPORTES_DIR / 'posibles_duplicados_parciales.csv'} ({len(parciales_despues)} pares)")
+    print(f"Registro de transformaciones: {REPORTES_DIR / 'RegistroTransformaciones.csv'} ({len(tabla_transformaciones)} filas)")
+    print(f"Posibles duplicados parciales (nombre similar, no identico) para revision manual: {REPORTES_DIR / 'PosiblesDuplicadosParciales.csv'} ({len(parciales_despues)} pares)")
     print(
-        f"Establecimientos con nombre repetido en el mismo municipio: {REPORTES_DIR / 'establecimientos_nombre_repetido.csv'} "
+        f"Establecimientos con nombre repetido en el mismo municipio: {REPORTES_DIR / 'EstablecimientosNombreRepetido.csv'} "
         f"({len(nombres_repetidos)} grupos, {nombres_repetidos_distinta_direccion} con direccion distinta -> revisar esos primero)"
     )
 

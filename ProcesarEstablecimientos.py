@@ -7,10 +7,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
-DATOS_DIR = ROOT / "Datos/raw"
-CSV_DIR = DATOS_DIR / "csv"
-TMP_DIR = DATOS_DIR / ".tmp_csv_export"
-CONSOLIDATED_NAME = "establecimientos_diversificado_consolidado.csv"
+DATOS_DIR = ROOT / "Datos" / "Raw"
+CSV_DIR = ROOT / "Datos" / "Csv"
+TMP_DIR = ROOT / "Datos" / ".tmp_csv_export"
+CONSOLIDATED_NAME = "EstablecimientosDiversificadoConsolidado.csv"
 
 EXPECTED_HEADERS = [
     "CODIGO",

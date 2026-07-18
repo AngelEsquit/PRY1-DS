@@ -1,0 +1,18 @@
+variable,issues,transformations,validation_rules,expected_outcome
+CODIGO,"Formato inválido, faltantes y repetidos.","Conservar como texto, limpiar espacios y validar patrón ##-##-####-##.",Debe cumplir el patrón definido y no repetirse entre filas activas.,Identificador estable y apto para cruces.
+DISTRITO,Valores truncados o vacíos.,Normalizar texto y validar contra catálogo local de distritos.,Sin espacios sobrantes ni códigos incompletos.,Distrito consistente y comparable.
+DEPARTAMENTO,Variantes de escritura y validación pendiente contra catálogo externo.,Pasar a mayúsculas y comparar con catálogo local de referencia.,Debe pertenecer al conjunto de departamentos detectado en los archivos fuente.,Departamentos homologados.
+MUNICIPIO,Posibles variantes ortográficas y catálogo oficial no disponible en este diagnóstico.,"Normalizar mayúsculas, espacios y tildes; validar con catálogo oficial externo.",Sin categorías nuevas tras la homologación.,Municipios listos para validación final.
+ESTABLECIMIENTO,"Comillas, tildes, espacios múltiples y variantes ortográficas.",Limpiar caracteres invisibles y homogeneizar formato textual sin renombrar por criterio propio.,Conservar el nombre institucional correcto.,Nombre del centro educativo estable.
+DIRECCION,"Abreviaturas, puntuación irregular y vacíos.","Normalizar espacios, puntuación y abreviaturas evidentes.",No debe quedar vacía ni con placeholders.,Dirección legible y uniforme.
+TELEFONO,"Faltantes, separadores inconsistentes, letras y longitudes raras.",Conservar como texto y limpiar separadores; aislar teléfonos múltiples.,Solo dígitos o valores explícitamente vacíos.,Contacto telefónico utilizable.
+SUPERVISOR,"Acentos, mayúsculas y espacios múltiples.",Normalizar texto y eliminar placeholders.,Nombre de persona sin valores genéricos.,Supervisor consistente.
+DIRECTOR,Muchos placeholders y faltantes.,"Normalizar texto, detectar placeholders y dejar vacío solo cuando no exista dato real.","No usar --, --- o SIN DATO como nombres válidos.",Director depurado.
+NIVEL,Dominio reducido pero debe confirmarse.,Homologar categorías al catálogo esperado.,Solo valores permitidos por la fuente.,Nivel coherente.
+SECTOR,Categorías potencialmente diversas o variantes de escritura.,Estandarizar nombres equivalentes.,Valores dentro del dominio permitido.,Sector uniforme.
+AREA,Debe limitarse a urbano/rural.,Normalizar mayúsculas y tildes.,Solo URBANA o RURAL.,Área validada.
+STATUS,Estados textuales con posible variación de escritura.,Homologar a lista controlada de estados.,No introducir estados nuevos sin soporte de fuente.,Estado institucional consistente.
+MODALIDAD,Categorías compactas pero deben revisarse.,Normalizar texto y revisar dominios.,Conjunto controlado sin variantes innecesarias.,Modalidad depurada.
+JORNADA,Categorías de horario con posibles variantes.,Estandarizar etiquetas y revisar valores raros.,Solo etiquetas oficiales de jornada.,Jornada uniforme.
+PLAN,Valores equivalentes escritos de forma distinta o incompleta.,Normalizar formato textual y consolidar equivalencias.,Solo planes admitidos por el dataset.,Plan académico claro.
+DEPARTAMENTAL,Debe coincidir con el departamento de referencia o el catálogo oficial.,Comparar contra catálogo local y validar equivalencias.,Sin discrepancias con el valor departamental esperado.,Campo territorial consistente.

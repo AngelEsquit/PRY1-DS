@@ -1,0 +1,18 @@
+column,tipo_dato_detectado,valores_unicos,valores_no_vacios,valor_mas_frecuente,frecuencia_top
+CODIGO,codigo alfanumerico (patron fijo ##-##-####-##),11867,11867,16-01-0137-46,1
+DISTRITO,codigo alfanumerico (formato variable: ##-### o ##-##-####),1681,11335,01-403,166
+DEPARTAMENTO,categorico (dominio cerrado),23,11867,CIUDAD CAPITAL,2161
+MUNICIPIO,categorico (dominio cerrado),352,11867,ZONA 1,868
+ESTABLECIMIENTO,texto libre,6312,11862,INSTITUTO NACIONAL DE EDUCACION DIVERSIFICADA,354
+DIRECCION,texto libre,7439,11791,CABECERA MUNICIPAL,324
+TELEFONO,texto (digitos con separadores no uniformes; puede haber varios numeros por celda),6571,10921,22067425,71
+SUPERVISOR,texto libre,1280,11332,CARLOS HUMBERTO GONZALEZ DE LEON,227
+DIRECTOR,texto libre,5514,10134,---,167
+NIVEL,categorico (dominio cerrado),1,11867,DIVERSIFICADO,11867
+SECTOR,categorico (dominio cerrado),4,11867,PRIVADO,9891
+AREA,categorico (dominio cerrado),3,11867,URBANA,9461
+STATUS,categorico (dominio cerrado),5,11867,ABIERTA,6860
+MODALIDAD,categorico (dominio cerrado),2,11867,MONOLINGUE,11394
+JORNADA,categorico (dominio cerrado),6,11867,DOBLE,3772
+PLAN,categorico (dominio cerrado),13,11867,DIARIO(REGULAR),7452
+DEPARTAMENTAL,categorico (dominio cerrado),26,11867,GUATEMALA NORTE,1489
