@@ -11,6 +11,7 @@ pluggy
 Pygments
 pytest
 python-dateutil
+requests
 RapidFuzz
 six
 tzdata
