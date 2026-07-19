@@ -1,0 +1,244 @@
+
+--- PAGE 1 ---
+ 
+Universidad del Valle de Guatemala 
+Facultad de Ingeniería 
+Departamento de Ciencias de la Computación 
+CC3084 – Data Science 
+Semestre II– 2026 
+ 
+Proyecto 1. 
+Obtención y Limpieza de los datos 
+ INTRODUCCIÓN:  
+Los tipos y las fuentes de datos como se encuentran en las organizaciones son realmente diversos. 
+El primer trabajo de un científico de datos es acceder a las fuentes y preparar los datos para que 
+puedan ser analizados. Usualmente esto lleva un gran trabajo, pero sin hacerlo, el riesgo de llegar a 
+resultados erróneos es demasiado alto . Con la realización de este proyecto, no solo aprenderá a 
+utilizar las herramientas que le permitan acceder a los datos, sino a limpiarlos, haciéndolo de la 
+forma más transparente posible. 
+Competencias: 
+- Utiliza las herramientas que tiene a su disposición para obtener los datos de la fuente 
+especificada. 
+- Modifica los datos que obtuvo realizando procesos de limpieza que allanen el camino del 
+analista de datos. 
+- Hace el proceso de limpieza transparente y reproducible para cualquiera que lo desee  
+verificar. 
+- Elabora un “Code Book” detallado que contenga todos los metadatos que sean necesarios 
+para analizar los datos. 
+ACTIVIDADES 
+1. Descargue los datos de los establecimientos educativos de todo el país que lleguen hasta el 
+nivel de diversificado (NIVEL ESCOLAR: DIVERSIFICADO). Los puede encontrar en el siguiente 
+vínculo: http://www.mineduc.gob.gt/BUSCAESTABLECIMIENTO_GE/ 
+2. Guarde los datos crudos en archivos .csv. 
+3. Análisis del estado inicial de los datos : Elabore un diagnóstico del conjunto de datos que, 
+como mínimo incluya: 
+a. Número de registros y variables.  
+b. Tipo de dato de cada variable.  
+c. Cantidad y porcentaje de valores faltantes por variable.  
+d. Cantidad de valores únicos.  
+e. Cantidad de registros duplicados exactos.  
+f. Variables con valores fuera de dominio o inconsistentes.  
+g. Variables con formatos inconsistentes.  
+h. Identificación de problemas potenciales de calidad de datos. 
+Este análisis debe estar respaldado por tablas y estadísticas generadas usando código.  
+4. Plan de limpieza: Antes de modificar los datos deberá elaborar un plan de limpieza donde 
+describa, para cada variable: 
+a. Problemas encontrados.  
+--- PAGE 2 ---
+ 
+Universidad del Valle de Guatemala 
+Facultad de Ingeniería 
+Departamento de Ciencias de la Computación 
+CC3084 – Data Science 
+Semestre II– 2026 
+ 
+b. Regla que utilizará para corregirlos y por qué cree que funcionará.  
+c. Riesgos asociados a la transformación.  
+5. Limpieza del conjunto de datos: Realice todas las operaciones necesarias para obtener un 
+conjunto de datos consistente, reproducible y listo para el análisis. Deberá revisar todas las 
+variables del conjunto de datos considerando los siguientes aspectos cuando sean 
+aplicables: 
+a. Explique cómo fueron tratados: 
+i. Valores faltantes y NA.  
+ii. Cadenas vacías.  
+iii. Espacios en blanco.  
+iv. Valores como "N/A", "NULL", "-", ".", "Sin dato", etc.  
+b. Verifique que cada variable tenga el tipo de dato apropiado. 
+▪ Por ejemplo: 
+• números almacenados como texto,  
+• fechas almacenadas como cadenas,  
+• variables categóricas codificadas incorrectamente.  
+c. Normalización de texto. Revise:  
+i. espacios iniciales y finales,  
+ii. espacios múltiples,  
+iii. uso consistente de mayúsculas y minúsculas,  
+iv. tildes,  
+v. caracteres especiales,  
+vi. signos de puntuación innecesarios,  
+vii. caracteres invisibles.  
+d. Consistencia de categorías. Justifique cualquier unificación realizada . Detecte 
+categorías escritas de diferentes maneras: 
+i. Por ejemplo: 
+• Guatemala 
+• GUATEMALA 
+• Guatemala 
+• Guatemla 
+• Guatemala. 
+e. Formatos. Verifique formatos consistentes para variables como: 
+i. teléfonos,  
+ii. códigos,  
+iii. direcciones,  
+iv. nombres.  
+f. Valores inválidos 
+i. Identifique valores que no pertenecen al dominio esperado. 
+• Ejemplos: 
+o departamentos inexistentes,  
+o municipios inválidos,  
+--- PAGE 3 ---
+ 
+Universidad del Valle de Guatemala 
+Facultad de Ingeniería 
+Departamento de Ciencias de la Computación 
+CC3084 – Data Science 
+Semestre II– 2026 
+ 
+o teléfonos con letras o con menos dígitos,  
+o códigos imposibles.  
+g. Registros duplicados 
+i. Debe buscar tanto: 
+1. duplicados exactos,  
+2. duplicados parciales.  
+a. Para los duplicados parciales se sugiere utilizar alguna 
+técnica basada en similitud de cadenas (por ejemplo 
+Levenshtein, Jaro-Winkler, RapidFuzz o equivalente). 
+ii. No elimine automáticamente los registros. Analice cada caso y documente 
+la decisión tomada. 
+h. Consistencia entre variables 
+i. Revise que los valores de distintas variables no se contradigan entre sí. 
+ii. Documente cualquier inconsistencia encontrada. 
+i. Variables derivadas 
+i. Si crea nuevas variables, deberá justificar: 
+• por qué fueron creadas,  
+• cómo fueron calculadas,  
+• cuál es su utilidad.  
+• Todas deberán aparecer en el Libro de Códigos. 
+6. Registro de transformaciones: Toda modificación realizada deberá quedar documentada en 
+una tabla como la siguiente: 
+Variable Problema 
+detectado 
+Transformación  Registros 
+afectados 
+Justificación 
+     
+Todo el proceso deberá ser completamente reproducible. 
+7. Validación del conjunto limpio: Al finalizar la limpieza deberá ejecutar pruebas automáticas 
+que verifiquen la calidad del conjunto de datos. Deberá comprobar que: 
+• no existan registros duplicados exactos;  
+• no existan espacios al inicio o final de textos;  
+• los teléfonos tengan un formato consistente;  
+• los nombres de departamentos y municipios pertenezcan al catálogo 
+correspondiente;  
+• las variables tengan el tipo de dato esperado;  
+• no existan categorías duplicadas por diferencias de escritura;  
+• no existan valores inválidos detectados durante el diagnóstico inicial. 
+8. Informe de calidad de los datos: El informe deberá comparar el estado del conjunto de datos 
+antes y después de la limpieza. Deberá incluir una tabla como la siguiente:  
+Métrica Antes Después 
+Registros   
+Variables   
+--- PAGE 4 ---
+ 
+Universidad del Valle de Guatemala 
+Facultad de Ingeniería 
+Departamento de Ciencias de la Computación 
+CC3084 – Data Science 
+Semestre II– 2026 
+ 
+Valores faltantes   
+Variables con NA   
+Duplicados exactos   
+Posibles duplicados   
+Variables con formato 
+inconsistente 
+  
+Variables con tipo 
+incorrecto 
+  
+Categorías inconsistentes   
+Errores corregidos   
+En la que ponga la siguiente información: 
+ 
+Registros: Número total de filas del conjunto de datos. Debe justificarse si cambió (por 
+ejemplo, eliminación de duplicados exactos). 
+Variables: Número total de columnas. Si se agregaron variables derivadas o se eliminaron 
+columnas vacías, debe explicarse. 
+Valores faltantes: Número y porcentaje total de celdas con valores faltantes (NA, NULL, 
+cadenas vacías, etc.). 
+Variables con NA: Cantidad de variables que contienen al menos un valor faltante. 
+Duplicados exactos: Número de registros idénticos en todas sus columnas. 
+Posibles duplicados: Número de registros identificados como posibles duplicados 
+mediante similitud de nombres, direcciones o teléfonos. Debe indicarse cuántos fueron 
+corregidos, fusionados o conservados. 
+Variables con formato inconsistente: Cantidad de variables que presentaban problemas 
+de formato (espacios, mayúsculas, teléfonos, fechas, etc.). 
+Variables con tipo incorrecto: Cantidad de variables cuyo tipo de dato no coincidía con el 
+esperado (por ejemplo, números almacenados como texto). 
+Categorías inconsistentes: Número de categorías diferentes que representaban el mismo 
+valor (por ejemplo, "Guatemala", "GUATEMALA", "guatemala"). 
+Errores corregidos: Total de correcciones realizadas durante la limpieza, o un resumen por 
+tipo de error. 
+ 
+9. Generación del conjunto limpio: Genere un único conjunto de datos, con la información de 
+todos los departamentos que cumpla las siguientes condiciones: 
+a. estructura consistente;  
+b. tipos de datos correctos;  
+c. nombres de variables descriptivos;  
+d. formato uniforme en todas las columnas;  
+e. ausencia de errores detectados durante la fase de validación. 
+10. Libro de códigos: Para cada variable el Libro de Códigos deberá incluir: 
+a. Descripción de la variable;  
+b. Tipo de dato;  
+c. Dominio permitido;  
+--- PAGE 5 ---
+ 
+Universidad del Valle de Guatemala 
+Facultad de Ingeniería 
+Departamento de Ciencias de la Computación 
+CC3084 – Data Science 
+Semestre II– 2026 
+ 
+d. Valores posibles;  
+e. Tratamiento aplicado durante la limpieza;  
+f. Variables derivadas (si existen);  
+g. Fecha de extracción;  
+h. Fuente de los datos;  
+i. Versión del conjunto limpio. 
+11. Todo el proceso deberá ser completamente reproducible. 
+EVALUACIÓN 
+- (5 puntos) Obtención y documentación y unión de los datos.  
+- (15 puntos) Análisis del estado de los datos crudos : Se hace un análisis detallado del 
+estado de los datos antes de comenzar las operaciones de limpieza. (Diagnóstico) 
+- (10 puntos) Plan de limpieza. Se elabora el plan de limpieza  en el que especifican que 
+problema tiene el campo, cual es la posible transformación y los riesgos de aplicarlas.  
+- (30 puntos) Se hace una limpieza de calidad  sobre todas las variables  del conjunto de 
+datos total, realizando todas las operaciones propuestas en esta guía. Se demuestra la 
+capacidad para identificar registros repetidos tanto exactos como parciales. 
+- (10 puntos) Se implementan pruebas que permitan verificar que el conjunto de datos 
+cumple las reglas de calidad establecidas 
+- (10 puntos) Se evalúa la capacidad para demostrar objetivamente la mejora obtenida 
+después del proceso de limpieza. 
+- (10 puntos)  Libro de códigos.  El libro de código debe ser comprensible, estar bien 
+detallado y organizado. Contiene los metadatos necesarios para comprender el 
+conjunto de datos, incluidas las fechas en las que se extrajeron y la fuente. 
+- (10 puntos) Generación del conjunto de datos Limpios . Se genera un solo conjunto de 
+datos con la información de todos los departamentos. Los datos generados están 
+limpios y pueden utilizarse para hacer análisis. 
+NOTA: Todos los integrantes del grupo deben contribuir al repositorio y code book. No se 
+evaluará a quien no tenga contribuciones significativas. 
+MATERIAL A ENTREGAR 
+- Archivo .r, .rmd, .ipynb, o .py, con el código de las acciones tomadas desde que se carga 
+el conjunto de datos hasta que se termina de limpiar. 
+- Link del repositorio con el código, los datos y el libro de códigos. 
+- Documento del Google docs o markdown donde se trabajó el libro de códigos 
+- Archivo pdf, con el libro de códigos 
+- Archivo csv con los datos limpios 
