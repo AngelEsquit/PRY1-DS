@@ -233,20 +233,26 @@ class TestTelefono:
             + "\n".join(f"  {e}" for e in errores)
         )
 
-    def test_telefono_valido_columna_presente(self, df):
-        """Si el notebook agrego TELEFONO_VALIDO, no debe haber falsos en registros con teléfono."""
+    def test_telefono_valido_es_booleano_y_coherente(self, df):
+        """TELEFONO_VALIDO debe ser una bandera booleana coherente:
+        sólo True/False, y ninguna fila sin teléfono puede quedar marcada
+        como válida.
+        """
         if "TELEFONO_VALIDO" not in df.columns:
             pytest.skip("Columna TELEFONO_VALIDO no presente (notebook 02 no ejecutado).")
-        con_telefono = df[df["TELEFONO"].notna()]
-        invalidos = con_telefono[con_telefono["TELEFONO_VALIDO"].astype(str) == "False"]
-        # Sólo se avisa; no se falla porque el dataset puede conservar
-        # deliberadamente teléfonos de 7 dígitos (formato antiguo documentado).
-        if not invalidos.empty:
-            pytest.warns(
-                UserWarning,
-                match=".*"
-            ) if False else None   # placeholder para un futuro warning
-        # El test pasa siempre; lo que importa es que la columna existe.
+
+        valores = set(df["TELEFONO_VALIDO"].dropna().astype(str).unique())
+        assert valores <= {"True", "False"}, (
+            f"TELEFONO_VALIDO tiene valores no booleanos: {valores}"
+        )
+
+        sin_telefono_pero_valido = df[
+            df["TELEFONO"].isna() & (df["TELEFONO_VALIDO"].astype(str) == "True")
+        ]
+        assert sin_telefono_pero_valido.empty, (
+            f"{len(sin_telefono_pero_valido)} fila(s) sin teléfono marcadas como "
+            "TELEFONO_VALIDO=True."
+        )
 
 
 # ---------------------------------------------------------------------------

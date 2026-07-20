@@ -7,3 +7,7 @@ Variables con NA,6.0,6.0
 Duplicados exactos (fila completa),0.0,0.0
 "Posibles duplicados parciales (nombre similar, no identico)",3726.0,2075.0
 Establecimientos unicos (ESTABLECIMIENTO),6313.0,5833.0
+Variables con formato inconsistente,8.0,0.0
+Variables con tipo incorrecto,0.0,0.0
+Categorias inconsistentes (variantes de escritura),142.0,0.0
+Errores corregidos (registros modificados),11127.0,0.0

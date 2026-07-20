@@ -1,4 +1,4 @@
-# Libro de Códigos (Code Book)
+# Code Book
 **Proyecto 1 - Obtención y Limpieza de Datos - Data Science**
 
 ## Metadatos del Conjunto de Datos Limpio
@@ -167,7 +167,11 @@ A continuación, se presenta la validación del conjunto de datos limpio compara
 | **% de faltantes** | 2.11% | 2.12% | Aumento derivado de la conversión de texto genérico a NA. |
 | **Variables con NA** | 6 | 6 | Las variables que contienen datos nulos se mantuvieron estables (Director, Supervisor, Dirección, etc). |
 | **Duplicados exactos (fila completa)** | 0 | 0 | No existían filas 100% idénticas en todas sus columnas en el origen. |
-| **Posibles duplicados parciales** | 3,726 | 2,075 | Se redujeron drásticamente las discrepancias parciales (similitud difusa) gracias a la corrección estandarizada de tildes en nombres propios. |
+| **Posibles duplicados parciales** | 3,726 | 2,075 | Se redujeron las discrepancias parciales (similitud difusa) gracias a la corrección estandarizada de tildes en nombres propios. De los 2,075 restantes, 463 se clasifican como probables duplicados (misma dirección y/o teléfono) y 1,520 como probablemente distintos (dirección diferente); ver `Reportes/ResumenDecisionesDuplicados.csv`. |
 | **Establecimientos únicos** | 6,313 | 5,833 | Al corregir variaciones ortográficas (ej. GONZÁLEZ vs GONZALEZ), entidades lógicamente idénticas se unificaron, reduciendo el total. |
+| **Variables con formato inconsistente** | 8 | 0 | 8 variables necesitaban corrección de formato (espacios, tildes, comillas, separadores de teléfono, placeholders); tras la limpieza ninguna las conserva. |
+| **Variables con tipo incorrecto** | 0 | 0 | Ninguna variable era un número almacenado como texto: los identificadores (CODIGO, DISTRITO, TELEFONO) se conservan como texto a propósito. La única numérica es la derivada `TELEFONO_CANTIDAD`, creada con el tipo correcto. |
+| **Categorías inconsistentes (variantes de escritura)** | 142 | 0 | 142 grafías distintas representaban el mismo valor (ej. PETEN/PETÉN, tildes en municipios); se homologaron a su forma canónica. |
+| **Errores corregidos (registros modificados)** | 11,127 | 0 | Total de registros modificados sumando todas las transformaciones (ver `Reportes/RegistroTransformaciones.csv`, columna *Registros afectados*). |
 
-*Nota: Todas las transformaciones aplicadas fueron guardadas para reproducibilidad en `Reportes/RegistroTransformaciones.csv`. Los duplicados parciales restantes se exportaron a `Reportes/PosiblesDuplicadosParciales.csv` para revisión manual del analista, de acuerdo con las instrucciones del proyecto que prohíben su eliminación automática.*
+*Nota: Todas las transformaciones aplicadas fueron guardadas para reproducibilidad en `Reportes/RegistroTransformaciones.csv`. Los 2,075 posibles duplicados parciales se conservaron sin eliminar (según las instrucciones del proyecto que prohíben su eliminación automática) y cada par recibió una decisión documentada por regla en `Reportes/PosiblesDuplicadosParciales.csv`, resumida en `Reportes/ResumenDecisionesDuplicados.csv`.*

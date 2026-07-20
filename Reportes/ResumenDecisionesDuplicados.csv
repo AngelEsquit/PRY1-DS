@@ -1,0 +1,6 @@
+decision,pares
+Probablemente distintos (direccion diferente): conservar ambos,1520
+"Probable duplicado (misma direccion y telefono): candidato a fusion, revisar",213
+"Probable duplicado (mismo telefono, nombre casi identico): revisar",181
+Indeterminado: requiere revision manual,92
+"Probable duplicado (misma direccion, nombre casi identico): revisar",69

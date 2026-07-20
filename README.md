@@ -1,47 +1,41 @@
 # Proyecto 1 — Obtención y limpieza de datos
 
-El pipeline parte de archivos `.xls` de MINEDUC y conserva cada etapa para
-que el diagnóstico y la limpieza puedan repetirse al actualizar la fuente.
+Pipeline reproducible sobre los establecimientos de nivel diversificado del
+MINEDUC: descarga, diagnóstico, limpieza y validación.
+
+## Integrantes
+
+- Javier España — #23361
+- Ángel Esquit — #23221
+- Roberto Barreda — #23354
 
 ## Estructura
 
-- `Data/raw/`: archivos fuente descargados, sin modificar.
-- `Data/csv/`: conversiones por departamento, consolidado y dataset limpio.
-- `Data/Diagnosticos/`: tablas generadas en el diagnóstico.
-- `notebooks/`: ejecución documentada y ordenada del proyecto.
+- `Data/raw/`: archivos `.xls` fuente, sin modificar.
+- `Data/csv/`: CSV por departamento, consolidado y dataset limpio.
+- `Data/Diagnosticos/`: tablas del diagnóstico inicial.
+- `notebooks/`: ejecución ordenada del proyecto.
 - `tests/`: validaciones automáticas del dataset limpio.
-- `Reportes/`: evidencia de transformaciones, calidad y duplicados a revisar.
+- `Reportes/`: transformaciones, informe de calidad y duplicados a revisar.
+- `Libro_de_Codigos.md` / `.pdf`: diccionario de variables y metadatos.
 
-## Orden de ejecución
-
-1. `notebooks/00_descarga_datos.ipynb` — punto reservado para la descarga
-   automática de los `.xls` desde el portal del MINEDUC.
-2. `notebooks/01_diagnostico_inicial.ipynb` — convierte los XLS a CSV y
-   genera las tablas de diagnóstico inicial.
-3. `notebooks/02_limpieza_y_validacion.ipynb` — aplica las reglas de limpieza
-   y exporta el dataset limpio.
-
-## Instalación
+## Uso
 
 ```powershell
 py -m pip install -r requirements.txt
 ```
 
-> **Nota sobre los archivos `.xls`**
-> Los archivos del portal del MINEDUC son páginas HTML exportadas con
-> extensión `.xls` (no hojas binarias de Excel). El notebook 01 los parsea
-> directamente con el módulo `html.parser` de la librería estándar de Python.
-> **No se necesita LibreOffice ni ninguna dependencia adicional.**
-> El proceso completo de conversión de los 23 departamentos tarda ~1–2 segundos.
+Ejecutar los notebooks en orden:
 
-## Pruebas automáticas
+1. `00_descarga_datos.ipynb` — descarga los `.xls` desde el portal del MINEDUC.
+2. `01_diagnostico_inicial.ipynb` — convierte los XLS a CSV y genera el diagnóstico.
+3. `02_limpieza_y_validacion.ipynb` — aplica la limpieza y exporta el dataset limpio.
+
+Los `.xls` del portal son HTML con extensión `.xls`; se parsean con la
+librería estándar, sin LibreOffice ni dependencias externas.
+
+## Pruebas
 
 ```powershell
 py -m pytest tests/ -v
 ```
-
-Cubre: sin duplicados exactos · sin espacios al borde · dominios de
-variables categóricas · formato de CODIGO · departamentos en catálogo ·
-teléfonos con dígitos únicamente · categorías sin mezcla de mayúsculas ·
-tipos de datos esperados.
-
